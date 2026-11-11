@@ -1,0 +1,88 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Configure",
+      "type": "process",
+      "command": "cmd.exe",
+      "args": [
+        "/d",
+        "/c",
+        "${workspaceFolder}/.vscode/scripts/ensure-build-directory.cmd",
+        "${workspaceFolder}",
+        "${env:CMAKE_ROOT}/bin/cmake.exe"
+      ],
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "仅在 build 缓存缺失或目录移动后按需生成 build 目录"
+    },
+    {
+      "label": "Build",
+      "type": "process",
+      "command": "${env:CMAKE_ROOT}/bin/cmake.exe",
+      "args": [
+        "--build",
+        "--preset",
+        "build-debug"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "按 build-debug 预设编译当前 CMake 目标"
+    },
+    {
+      "label": "Rebuild All",
+      "type": "shell",
+      "dependsOn": ["Clean", "Build"],
+      "dependsOrder": "sequence",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Clean",
+      "type": "process",
+      "command": "${env:CMAKE_ROOT}/bin/cmake.exe",
+      "args": ["--build", "--preset", "build-debug", "--target", "clean"],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "SysConfig",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/.vscode/scripts/open-sysconfig.ps1",
+        "-WorkspaceFolder",
+        "${workspaceFolder}"
+      ],
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "SysConfig v1.27.1 加载 MSPM0 SDK 产品并打开根目录首个 .syscfg 文件"
+    },
+    {
+      "label": "Flash",
+      "type": "process",
+      "command": "cmd.exe",
+      "args": [
+        "/d",
+        "/c",
+        "${workspaceFolder}/.vscode/scripts/flash.cmd",
+        "${workspaceFolder}",
+        "${env:CMAKE_ROOT}/bin/cmake.exe",
+        "${env:OPENOCD_ROOT}/bin/openocd.exe",
+        "${env:OPENOCD_SCRIPTS}"
+      ],
+      "dependsOn": "Build",
+      "dependsOrder": "sequence",
+      "group": "test",
+      "problemMatcher": [],
+      "detail": "先执行 Build，再烧录固件到 MSPM0G3507，完成后执行软件复位"
+    }
+  ]
+}

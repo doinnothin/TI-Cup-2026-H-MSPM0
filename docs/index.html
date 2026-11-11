@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>车载平衡滚球运动控制系统 · 2026 电赛 H 题</title>
+  <meta name="description" content="基于 TI MSPM0G3507 的车载平衡滚球运动控制系统固件（2026 电赛 H 题，Q2–Q6）。">
+  <style>
+    :root{
+      --bg:#0b1020; --bg2:#121a33; --card:#161f3d; --line:#27324f;
+      --text:#e8ecf7; --muted:#9aa8c7; --accent:#4f8cff; --accent2:#39d0a5;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+      color:var(--text);background:radial-gradient(1200px 600px at 20% -10%,#1b2a5a 0%,transparent 60%),
+      radial-gradient(900px 500px at 110% 10%,#123a33 0%,transparent 55%),var(--bg);}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    main{width:min(1080px,calc(100% - 36px));margin:0 auto;padding:56px 0 72px}
+    .hero{text-align:center}
+    .kicker{color:var(--accent2);font-weight:700;letter-spacing:.08em;font-size:13px;text-transform:uppercase}
+    h1{font-size:clamp(28px,5vw,46px);margin:14px 0 10px;line-height:1.15}
+    .sub{color:var(--muted);font-size:clamp(15px,2.2vw,19px);max-width:760px;margin:0 auto;line-height:1.7}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:22px 0 6px}
+    .badges img{height:26px}
+    .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:28px 0 8px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:12px;font-weight:700;
+      border:1px solid var(--line);background:var(--card);color:var(--text);transition:.15s}
+    .btn:hover{transform:translateY(-1px);text-decoration:none;border-color:var(--accent)}
+    .btn.primary{background:linear-gradient(135deg,var(--accent),#7c5cff);border:none}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:44px}
+    .card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);
+      border-radius:16px;padding:20px}
+    .card h3{margin:0 0 8px;font-size:17px}
+    .card p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}
+    .emoji{font-size:22px;display:block;margin-bottom:8px}
+    h2{margin:56px 0 18px;font-size:24px}
+    .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    .shot{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#000}
+    .shot img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover}
+    .shot span{display:block;padding:10px 12px;background:var(--card);color:var(--muted);font-size:13px}
+    footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;text-align:center}
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="kicker">2026 全国大学生电子设计竞赛 · H 题</div>
+    <h1>⚽ 车载平衡滚球运动控制系统</h1>
+    <p class="sub">基于 <b>TI MSPM0G3507</b> 的滚球平衡控制固件：视觉串口反馈 + 球位置闭环 + 摆杆几何映射 + X42S 步进执行器，覆盖第 2～6 问，让钢球在飞驰的小车上稳稳停在指定位置。</p>
+    <div class="badges">
+      <img alt="MCU" src="https://img.shields.io/badge/MCU-MSPM0G3507-03234B">
+      <img alt="Language" src="https://img.shields.io/badge/Language-C11-283593">
+      <img alt="Build" src="https://img.shields.io/badge/Build-CMake%20%2B%20Ninja-00b4d8">
+      <img alt="Contest" src="https://img.shields.io/badge/Contest-NUEDC%202026%20H-orange">
+    </div>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/doinnothin/TI-Cup-2026-H-MSPM0">💻 GitHub 仓库</a>
+      <a class="btn" href="demo/">📽️ 实机演示</a>
+      <a class="btn" href="assets/NUEDC-2026-H-problem.pdf">📄 赛题 PDF</a>
+      <a class="btn" href="https://github.com/doinnothin/TI-Cup-2026-H-MSPM0/tree/main/docs">📚 详细文档</a>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card"><span class="emoji">🎯</span><h3>双系统解耦</h3><p>小车运动 + 摆杆滚球两个耦合系统，以共享车辆状态机 + 模式门控复用已验证控制律。</p></div>
+    <div class="card"><span class="emoji">👁️</span><h3>纯视觉观测</h3><p>仅有位置测量时用 α-β 估计把速度作为阻尼项，不虚构"速度内环"，贴合真实可观测条件。</p></div>
+    <div class="card"><span class="emoji">🛑</span><h3>预测性制动</h3><p>按停车距离模型提前反向阻尼，而不是到点才刹车；兼顾静摩擦起步补偿。</p></div>
+    <div class="card"><span class="emoji">🧪</span><h3>可复现验证</h3><p>主机回归（ARM 模拟器）+ ARM 构建 + 参数辨识工具 + 调试案例，全链路留证。</p></div>
+  </section>
+
+  <h2>📽️ 实机演示</h2>
+  <div class="shots">
+    <a class="shot" href="demo/#q3"><img src="demo/q3_poster.jpg" alt="Q3 演示"><span>Q3 · 静止滚球按流程切换位置</span></a>
+    <a class="shot" href="demo/#q4"><img src="demo/q4_poster.jpg" alt="Q4 演示"><span>Q4 · 静态底盘 + 滚球恢复</span></a>
+    <a class="shot" href="demo/#q5"><img src="demo/q5_poster.jpg" alt="Q5 演示"><span>Q5 · 动态底盘 + 滚球控制</span></a>
+    <a class="shot" href="demo/#q6"><img src="demo/q6_poster.jpg" alt="Q6 演示"><span>Q6 · 目标捕获 + 相对目标闭环</span></a>
+  </div>
+
+  <footer>
+    <p>作者 / 维护：<a href="https://github.com/doinnothin">@doinnothin</a> · 仅供学习交流，第三方组件许可见仓库 <a href="https://github.com/doinnothin/TI-Cup-2026-H-MSPM0/blob/main/THIRD_PARTY_NOTICES.md">THIRD_PARTY_NOTICES</a></p>
+  </footer>
+</main>
+</body>
+</html>

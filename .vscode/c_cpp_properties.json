@@ -1,0 +1,33 @@
+{
+    "configurations": [
+  {
+    "name": "MSPM0G3507",
+    "includePath": [
+      "${workspaceFolder}",
+      "${workspaceFolder}/include",
+      "${workspaceFolder}/include/core",
+      "${workspaceFolder}/include/core/ti/driverlib",
+      "${workspaceFolder}/include/core/third_party/CMSIS/Core/Include",
+      "${workspaceFolder}/user",
+      "${workspaceFolder}/user/**",
+      "${workspaceFolder}/source/core",
+      "${env:ARM_GCC_ROOT}/arm-none-eabi/include",
+      "${env:ARM_GCC_ROOT}/lib/gcc/arm-none-eabi/*/include"
+    ],
+    "defines": [
+      "__MSPM0G3507__",
+      "__GNUC__"
+    ],
+    "compilerPath": "${env:ARM_GCC_ROOT}/bin/arm-none-eabi-gcc.exe",
+    "compilerArgs": [
+      "-mcpu=cortex-m0plus",
+      "-mthumb",
+      "-mfloat-abi=soft"
+    ],
+    "cStandard": "c11",
+    "cppStandard": "c++17",
+    "intelliSenseMode": "gcc-arm"
+  }
+  ],
+  "version": 4
+}

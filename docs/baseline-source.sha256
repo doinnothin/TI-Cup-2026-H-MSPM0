@@ -1,0 +1,11 @@
+# SHA-256 of the eight modified tracked files in the original s1_q6 working tree at cleanup snapshot.
+# All other tracked content is identified by parent commit 6640813c8b907b38c7611fd83320b1dec8ef8809.
+# Hashes are over file bytes; paths are repository-relative.
+b30d43278ac3b73ac8f3653f11f9e85c44ee153de472ef4f582df37e29d088d7  tests/q6_target_test.c
+9c34268dff66104ce0f6f92813b27c859e9fc3dfce28af77bca37d28928cc34f  user/app/q4/q45_vehicle_config.h
+75ab3aa8f85a5312882c455cbffc2b4fc45bd61da38cc9e8a3e4643cd701fb22  user/app/q4/q45_vehicle_control.c
+1241395f5e7b6800b1739c7cda16fc928c96d819cf3826cc7816f1d6193f7635  user/app/q6/q6_config.h
+447b9c98b7e9f300fb349b3a890c654d94643d9e98e4844537d0bfb2ea58ab26  user/app/q6/q6_target.c
+b293378930fa3954d5abde34621fdfe6909f6a793106b863d54fe43c7500bdbb  user/code/debug_log.c
+a81d8fbf536bc14fbb54379186d2bf19dc25fbc1171acbe18b8123fd4e01f14d  user/code/debug_log.h
+df7fbcb63ffebdfdcdb6328906f687bf36036876a6fbdc1d9e16043e7f586340  user/main.c

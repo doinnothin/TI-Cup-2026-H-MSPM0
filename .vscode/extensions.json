@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "ms-vscode.cpptools",
+    "ms-vscode.cmake-tools",
+    "marus25.cortex-debug",
+    "mcu-debug.peripheral-viewer",
+    "eclipse-cdt.memory-inspector",
+    "actboy168.tasks"
+  ]
+}

@@ -1,0 +1,50 @@
+# Local toolchain configuration and credentials
+.env
+.env.*
+!.env.example
+
+# Local agent notes and source-provenance manifests (kept outside the public tree)
+/AGENTS.md
+/agent.md
+/skills-lock.json
+/Q5_BASELINE_SOURCE_MANIFEST.json
+/Q6_BASELINE_MANIFEST.md
+/Event.dot
+/debugword.docx
+/H题_车载平衡滚球运动控制系统.pdf
+/X42S闭环步进电机_驱动与测试用户手册.docx
+/工程交接_Q3自动调参_2026-09-21.md
+/docs/q4_tuning_debug_log.md
+/docs/q5_post_final_v1_experiment.md
+/docs/q5_stutter_fix_and_tuning_plan.md
+
+# CMake / Ninja / ARM GCC outputs
+/build/
+/build-*/
+/cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+build.ninja
+compile_commands.json
+*.elf
+*.hex
+*.bin
+*.map
+*.out
+*.o
+*.a
+
+# Trial logs, captures, plots, and Python cache
+/artifacts/
+/logs/
+/captures/
+/plots/
+/tools/pythonlib/
+/.venv-format/
+__pycache__/
+*.py[cod]
+
+# Per-machine IDE state
+.vscode/*.log
+.vscode/.browse.VC.db*

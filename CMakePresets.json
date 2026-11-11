@@ -1,0 +1,52 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 22,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "debug-armgcc",
+      "displayName": "Debug ARM GCC",
+      "description": "Use ARM GCC with Ninja in Debug mode",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_MAKE_PROGRAM": "$env{NINJA_ROOT}/ninja.exe",
+        "ARM_GCC_TOOLCHAIN_ROOT_DIR": "$env{ARM_GCC_ROOT}",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "USE_TI_DRIVERS": "OFF",
+        "USE_ZF_LIB": "OFF"
+      }
+    },
+    {
+      "name": "release-armgcc",
+      "displayName": "Release ARM GCC",
+      "description": "Use ARM GCC with Ninja in Release mode",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_MAKE_PROGRAM": "$env{NINJA_ROOT}/ninja.exe",
+        "ARM_GCC_TOOLCHAIN_ROOT_DIR": "$env{ARM_GCC_ROOT}",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "USE_TI_DRIVERS": "OFF",
+        "USE_ZF_LIB": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build-debug",
+      "configurePreset": "debug-armgcc",
+      "jobs": 8
+    },
+    {
+      "name": "build-release",
+      "configurePreset": "release-armgcc",
+      "jobs": 8
+    }
+  ]
+}

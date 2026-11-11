@@ -1,0 +1,19 @@
+{
+  "cmake.cmakePath": "${env:CMAKE_ROOT}/bin/cmake.exe",
+  "cmake.useCMakePresets": "always",
+  "cmake.configureOnOpen": true,
+  "cmake.statusbar.advanced": {
+    "debug": { "visibility": "hidden" },
+    "launch": { "visibility": "hidden" }
+  },
+  "files.associations": {
+    "*.h": "c",
+    "*.c": "c",
+    "FreeRTOS.h": "c",
+    "FreeRTOSConfig.h": "c"
+  },
+  "cortex-debug.armToolchainPath": "${env:ARM_GCC_ROOT}/bin",
+  "cortex-debug.openocdPath": "${env:OPENOCD_ROOT}/bin/openocd.exe",
+  "cortex-debug.gdbPath": "${env:ARM_GCC_ROOT}/bin/arm-none-eabi-gdb.exe",
+  "cortex-debug.objdumpPath": "${env:ARM_GCC_ROOT}/bin/arm-none-eabi-objdump.exe"
+}
