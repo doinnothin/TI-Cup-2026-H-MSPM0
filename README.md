@@ -10,7 +10,8 @@
 
 📽️ [实机演示](https://doinnothin.github.io/TI-Cup-2026-H-MSPM0/demo/) ·
 📄 [赛题原文](docs/assets/NUEDC-2026-H-problem.pdf) ·
-🧭 [架构文档](docs/architecture.md)
+🧭 [架构文档](docs/architecture.md) ·
+🧪 [测试与证据](docs/testing.md)
 
 基于 **TI MSPM0G3507** 的车载平衡滚球运动控制系统固件，覆盖 **第 2～6 问（Q2–Q6）**：视觉串口反馈、球位置闭环、摆杆几何映射、X42S 步进执行器控制，以及第 4/5/6 问共用的车辆运动控制状态机。视觉识别算法运行在外部视觉模块上，不在本仓库范围内。
 
@@ -18,7 +19,7 @@
 
 - [✨ 项目亮点](#features) · [📽️ 实机演示](#demo) · [🏗️ 系统架构](#arch) · [⚙️ 控制方案](#control)
 - [🎯 题目覆盖](#coverage) · [📁 目录结构](#structure) · [🔧 硬件平台](#hardware) · [🛠️ 技术栈](#stack)
-- [🚀 快速开始](#quickstart) · [📚 文档导航](#docs) · [⚠️ 已知限制](#limits) · [👤 作者](#author)
+- [🧪 验证与证据](#verify) · [📚 文档导航](#docs) · [⚠️ 已知限制](#limits) · [👤 作者](#author)
 
 <a id="features"></a>
 ## ✨ 项目亮点
@@ -142,20 +143,15 @@ TIMG6 / UART / GPIO 中断：时基、收发与事件采集
 | 芯片 SDK | TI MSPM0 SDK、SysConfig、DriverLib、CMSIS-Core |
 | 控制算法 | α-β 状态估计、PD 外环、停车距离预测制动、静摩擦补偿、运动前馈 |
 | 通信协议 | 自定义视觉串口帧（`AA 55` + CRC16）、X42S 步进协议 |
+| 验证 | 主机 C 回归（Arm GCC + Unicorn 模拟器）、Python 数据分析工具 |
 
-<a id="quickstart"></a>
-## 🚀 快速开始
+<a id="verify"></a>
+## 🧪 验证与证据
 
-**构建固件**（CMake + Ninja + Arm GNU 工具链）：
-
-```powershell
-$env:ARM_GCC_ROOT = "C:\Toolchains\arm-gnu-toolchain"
-$env:NINJA_ROOT   = "C:\Tools\ninja"
-cmake --preset debug-armgcc
-cmake --build --preset build-debug
-```
-
-> 详细环境要求见 [源码与构建基线](docs/baseline.md)。`user/app/q6/q6_config.h` 中的台架宏与竞赛固件相互独立，实机前务必检查 CMake 缓存与宏定义。
+- ✅ **主机回归**（ARM 模拟器）：按键输入 9 项、遥测 14 项、Q5 5,664 项、Q6 目标 235 项 / 静态镜像 39 项，全部零失败。
+- ✅ **ARM 构建**：Debug 固件构建通过（Flash 约 100,968 / 131,072 字节，SRAM 约 17,672 / 32,768 字节）。
+- ✅ **实机**：用户报告 **第 5、6 问已通过实机验收**（具体数据以对应日期日志与现场条件为准）。
+- ⚠️ **证据边界**：编译/模拟通过 ≠ 实机正确；历史参数与结论的可信级别见 [测试与证据](docs/testing.md) 与 [已知限制](docs/known-limitations.md)。
 
 <a id="docs"></a>
 ## 📚 文档导航
@@ -166,7 +162,9 @@ cmake --build --preset build-debug
 | [控制流程](docs/control-algorithm.md) | 各问控制路径与 Q6 目标捕获 |
 | [硬件与外设归属](docs/hardware.md) | 引脚、按键映射、运行时安全边界 |
 | [源码与构建基线](docs/baseline.md) | 快照身份、工具链、固件变体 |
-| [已知限制](docs/known-limitations.md) | 范围与边界 |
+| [测试与证据](docs/testing.md) | 证据分级、回归范围、记录模板 |
+| [调试案例](docs/debugging-case-studies.md) | 7 个可复用的故障定位经验 |
+| [已知限制](docs/known-limitations.md) | 范围与验证边界 |
 | [第三方声明](THIRD_PARTY_NOTICES.md) | TI SDK / CMSIS 许可 |
 
 <a id="limits"></a>
